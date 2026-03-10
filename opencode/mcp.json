@@ -1,0 +1,61 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "autoupdate": true,
+  "mcp": {
+    //Index search tool across codebase
+    "cocoindex-code": {
+      "type": "local",
+      "command": ["cocoindex-code"],
+      "enabled": false,
+      //Variables to configure the code embedding model and batch size for indexing (optional but recommended model optimized for GPU)
+      "environment": {
+        "COCOINDEX_CODE_EMBEDDING_MODEL": "sbert/nomic-ai/CodeRankEmbed",
+        "COCOINDEX_CODE_BATCH_SIZE": "16"
+      }
+    },
+    //Tool for searching the latest documentation
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "your_api_key_here"
+      },
+      "enabled": true
+    },
+    // Search across github repositories
+    "gh_grep": {
+      "type": "remote",
+      "url": "https://mcp.grep.app"
+    },
+    // Full interaction with a Postgres database
+    "postgres": {
+      "type": "local",
+      "command": [
+        "docker",
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "DATABASE_URI",
+        "crystaldba/postgres-mcp",
+        "--access-mode=unrestricted"
+      ],
+      "environment": {
+        "DATABASE_URI": "database_uri_here"
+      },
+      "enabled": false
+    },
+    // Allow to control and query a local Chromium instance for web scraping, automation, and testing
+    "chrome_dev_tools": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "chrome-devtools-mcp@latest",
+        "-e",
+        "/usr/bin/chromium"
+      ],
+      "enabled": false
+    }
+  }
+}
