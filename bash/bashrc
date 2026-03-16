@@ -1,0 +1,24 @@
+# If not running interactively, don't do anything (leave this at the top of this file)
+[[ $- != *i* ]] && return
+
+# All the default Omarchy aliases and functions
+# (don't mess with these directly, just overwrite them here!)
+source ~/.local/share/omarchy/default/bash/rc
+
+# Load all modular scripts from ~/.bashrc.d/ (recursively) in THIS shell
+if [ -d "$HOME/.bashrc.d" ]; then
+  mapfile -d '' files < <(find "$HOME/.bashrc.d" -type f -name '*.sh' -print0 | sort -z)
+  for f in "${files[@]}"; do
+    [ -r "$f" ] && . "$f"
+  done
+fi
+
+[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+
+function y() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  command yazi "$@" --cwd-file="$tmp"
+  IFS= read -r -d '' cwd <"$tmp"
+  [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+  rm -f -- "$tmp"
+}
