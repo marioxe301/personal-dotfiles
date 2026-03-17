@@ -5,6 +5,8 @@
 - lazygit Terminal based git client
 - lazydocker Terminal based docker client
 - Resterm Terminal based REST client <https://github.com/unkn0wn-root/resterm>
+- Ouch Painless compression and decompression in the terminal <https://github.com/ouch-org/ouch>
+- yazi terminal based file explorer <https://github.com/sxyazi/yazi>
 - Opencode Terminal based AI agent <https://opencode.ai/>
 - Agents Setup for AI <https://github.com/darrenhinde/OpenAgentsControl>
 
